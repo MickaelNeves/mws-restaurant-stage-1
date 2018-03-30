@@ -156,9 +156,12 @@ createRestaurantHTML = (restaurant) => {
   li.append(address);
 
   const more = document.createElement('a');
+  const divMore = document.createElement("div");
+  divMore.className = 'view-more';
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more)
+  divMore.appendChild(more);
+  li.append(divMore)
 
   return li
 }
