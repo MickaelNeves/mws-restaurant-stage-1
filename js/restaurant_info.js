@@ -56,6 +56,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   address.innerHTML = restaurant.address;
 
   const image = document.getElementById('restaurant-img');
+  image.alt = restaurant.name + " in " + restaurant.neighborhood;
+  image.title = restaurant.name;
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
 
@@ -77,6 +79,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
   const hours = document.getElementById('restaurant-hours');
   for (let key in operatingHours) {
     const row = document.createElement('tr');
+    row.tabIndex = "0";
 
     const day = document.createElement('td');
     day.innerHTML = key;
@@ -117,6 +120,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
+  li.tabIndex = "0";
 
   const topDiv = document.createElement("div");
   topDiv.className = 'top-review-bar';
@@ -128,12 +132,10 @@ createReviewHTML = (review) => {
   const date = document.createElement('p');
   date.innerHTML = review.date;
   topDiv.appendChild(date);
-
   li.appendChild(topDiv);
 
   const clearFloat = document.createElement("div");
   clearFloat.className = 'clear-float';
-
   li.appendChild(clearFloat);
 
   const divRating = document.createElement("div");
@@ -143,7 +145,6 @@ createReviewHTML = (review) => {
   rating.innerHTML = `Rating: ${review.rating}`;
 
   divRating.appendChild(rating);
-
   li.appendChild(divRating);
 
   const comments = document.createElement('p');
@@ -160,6 +161,7 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
+  li.tabIndex = "0";
   breadcrumb.appendChild(li);
 }
 

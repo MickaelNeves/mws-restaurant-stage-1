@@ -432,6 +432,23 @@ nav h1 a {
   font-weight: normal;
 }
 
+/* ==================== Accessibility skip link ================= */
+
+.skip-link-map {
+  left: 0;
+  top: -40px;
+  position: absolute;
+  background: blue;
+  color: #fff;
+  z-index: 99999999;
+  padding: 8px 10px;
+}
+
+.skip-link-map:focus {
+  top: 0;
+  color: #fff;
+}
+
 /* ====================== Responsive Zone ====================== */
 
 @media only screen and (max-width: 400px) {
