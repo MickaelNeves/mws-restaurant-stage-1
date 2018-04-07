@@ -500,6 +500,14 @@ nav h1 a {
     padding: 25px 0;
   }
 
+  .skip-link-map {
+    top: -200px;
+  }
+
+  .skip-link-map:focus {
+    top: 0px;
+  }
+
   #reviews-container {
     max-width: 600px;
   }
