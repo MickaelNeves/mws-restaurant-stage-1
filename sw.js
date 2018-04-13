@@ -21,9 +21,9 @@ let urlsToCache = [
     '/img/10.jpg',
 ];
 
-self.addEventListener('install', function (event) {
+self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open(staticCacheName).then(function (cache) {
+        caches.open(staticCacheName).then(cache => {
             console.log('Caching...');
             return cache.addAll(urlsToCache);
         })
@@ -38,16 +38,25 @@ self.addEventListener("activate", event => {
                     !staticCacheName.includes(cacheName))
                     .map(cacheName => caches.delete(cacheName))
             );
-        }).catch(error => console.error("Error:", error))
+        }).catch(error => console.error("Activate Error:", error))
     );
 });
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request)
-        .then(function (response) {
-            if (response) return response;
-            return fetch(event.request);
-        })
+        caches.match(event.request).then(response => {
+            if (response) {
+                return response;
+            }else {
+                return fetch(event.request).then(response => {
+                    let cloneResp = response.clone();
+
+                    caches.open(staticCacheName).then(cache => {
+                        cache.put(event.request, cloneResp);
+                    });
+                    return response;
+                });
+            }
+        }).catch(error => console.error("Fetch Error:", error))
     );
 });
