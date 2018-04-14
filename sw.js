@@ -26,7 +26,7 @@ self.addEventListener('install', event => {
         caches.open(staticCacheName).then(cache => {
             console.log('Caching...');
             return cache.addAll(urlsToCache);
-        })
+        }).catch(error => console.error("Install Error:", error))
     );
 });
 
@@ -43,6 +43,18 @@ self.addEventListener("activate", event => {
 });
 
 self.addEventListener('fetch', event => {
+    /* for restaurant info urls */
+    if(event.request.url.includes('restaurant.html?id=')){
+        const strippedurl = event.request.url.split('?')[0];
+
+        event.respondWith(
+            caches.match(strippedurl).then(response => {
+                return response || fetch(event.response);
+            })
+        );
+        return;
+    }
+    /* for all other urls */
     event.respondWith(
         caches.match(event.request).then(response => {
             if (response) {
@@ -60,3 +72,4 @@ self.addEventListener('fetch', event => {
         }).catch(error => console.error("Fetch Error:", error))
     );
 });
+
